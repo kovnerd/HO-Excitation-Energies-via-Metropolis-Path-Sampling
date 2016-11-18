@@ -28,7 +28,7 @@ int **matrix_allocate_int (int lx, int ly)
     return s;
 }
 
-double **matrix_allocate_double (int lx, int ly)//NOT SURE WHAT SHOULD GO INSIDE sizeof()'s
+double **matrix_allocate_double (int lx, int ly)
 {
     double **s = (double **) malloc((unsigned long) lx * sizeof(double *));
     if (s == NULL)

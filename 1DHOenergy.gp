@@ -2,7 +2,8 @@
 set term pdfcairo
 set output "1DHO_energy.pdf"
 set size 1, 1
-set autoscale
+set xrange [0:3.5]
+set yrange [0:2.5]
 unset log
 unset label
 set xtic auto
