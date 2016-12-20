@@ -44,13 +44,13 @@ double G(double *xs, int n)
 
 double potential(double x)
 {
-	return MASS*x*x/2;
+	return MASS*x*x*0.5;
 }
 
 double S(double* xs, int i)
 {
 	int iNext = (i+1) % N;
-	int iPrev = (i-1+N) % N;
+	int iPrev = (i-1 + N) % N;
 	return LATTICE_SPACING*potential(xs[i]) + xs[i]*(xs[i]-xs[iNext]-xs[iPrev])/LATTICE_SPACING;
 }
 
@@ -71,8 +71,7 @@ void Gs_average(double** Gs, double* avG, int n_configs)
 	{
 		avG[n] = 0;
 		for(int alpha = 0; alpha < n_configs; alpha++)
-			avG[n] += Gs[alpha][n];
-		avG[n] /= n_configs;
+			avG[n] += Gs[alpha][n]/n_configs;
 	}
 }
 
@@ -141,14 +140,15 @@ void accumulateStatistics(double *xs, double *energy, double *avG, double *energ
 	}
 	Gs_average(Gs, avG, N_configs);//compute mc average of propagator G_n
 	
-	
+	/*for(int n = 0; n < N; n++)
+		printf("energy bootstrap comparison: n: %d, E: %f, bsE: %f\n",n,  )*/
 	for(int n_err = 0; n_err < N_error; n_err++)//energy error analysis
 	{
 		bootstrap_G(Gs, Gs_bootstrap, N_configs, r);//generate bootstrap copies of Gs
 		//bin_G(Gs_bootstrap, Gs_bins, N_configs, bin_size);//bin Gs bootstrap copies
 		Gs_average(Gs_bootstrap, G_temp, N_configs);//get propagator values from binned bootstrap copy of Gs
 		for(int n = 0; n < N; n++)
-			energy_bootstrap[n][n_err] = log(fabs(G_temp[n]/G_temp[(n + 1)%N]));//generate sample of energies
+			energy_bootstrap[n][n_err] = log(fabs(G_temp[n]/G_temp[(n + 1)%N]))/LATTICE_SPACING;//energy from bootstrap copy of Gs
 	}
 	
 	for(int n = 0; n < N; n++)

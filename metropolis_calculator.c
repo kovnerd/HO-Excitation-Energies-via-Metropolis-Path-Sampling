@@ -23,7 +23,7 @@ int main(void)
 	}
 	
 	accumulateStatistics(xs, energy, propagator, energy_error, r);
-	
+	//printf("modulo testing: %d vs %d \n", (-1)%20, (-1 + 20)%20);
 	for(int i = 0; i < N_points; i++) 
 		fprintf(fp, "%f %f %f %f\n", (n++)*LATTICE_SPACING, propagator[i], energy[i], energy_error[i]);
 	gsl_rng_free(r);
