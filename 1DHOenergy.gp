@@ -14,5 +14,5 @@ set xlabel "Time"
 set dummy t
 E(t) = a
 a = 1
-plot "harmonic_oscillator_metropolis.txt" using 1:3:4 title "numerically retrieved" pt 7 ps 0.25 with yerrorbars, E(t) title "asymptotic result" with lines;
+plot "harmonic_oscillator_metropolis.txt" every ::0::5 using 1:3:4 title "numerically retrieved" pt 7 ps 0.25 with yerrorbars, E(t) title "asymptotic result" with lines;
 set output
